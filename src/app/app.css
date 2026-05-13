@@ -270,9 +270,11 @@ input[pInputText]:focus,
 }
 
 :host ::ng-deep .p-slider {
-    background: rgba(255, 248, 231, 0.2);
-    border-radius: 999px;
-    height: 0.55rem;
+  background: rgba(255, 248, 231, 0.2);
+  border-radius: 999px;
+  height: 0.55rem;
+  margin: 0.65rem 0.7rem 0;
+  position: relative;
 }
 
 :host ::ng-deep .p-slider-range {
@@ -281,13 +283,15 @@ input[pInputText]:focus,
 }
 
 :host ::ng-deep .p-slider-handle {
-    background: #fff8e7;
-    border: 3px solid #facc15;
-    border-radius: 50%;
-    height: 1.25rem;
-    margin-left: -0.625rem;
-    margin-top: -0.35rem;
-    width: 1.25rem;
+  background: #fff8e7;
+  border: 3px solid #facc15;
+  border-radius: 50%;
+  height: 1.25rem;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.25rem;
 }
 
 .dedication {
