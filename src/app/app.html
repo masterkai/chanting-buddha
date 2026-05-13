@@ -74,12 +74,45 @@
       <section class="practice-panel" aria-live="polite">
         <p class="step-label">畫面 3</p>
         <h1>{{ chantText }}</h1>
+
+        <div class="round-status">
+          <span>{{ currentRound() }}</span>
+          <span>/</span>
+          <span>{{ totalRounds() }}</span>
+        </div>
+        <p class="round-caption">
+          第 {{ currentRound() }} 輪，每輪最多 25 組
+        </p>
+
         <div class="counter">
-          <span>{{ completedGroups() + 1 }}</span>
+          <span>{{ completedGroups() }}</span>
           <span>/</span>
           <span>{{ targetCount }}</span>
         </div>
         <p-progressbar [value]="progress()" [showValue]="false" />
+
+        <div class="tempo-control">
+          <div class="tempo-header">
+            <label for="beatSlider">念佛頻率</label>
+            <span>{{ currentBeatLabel() }}</span>
+          </div>
+          <p-slider
+            id="beatSlider"
+            name="beatSlider"
+            [(ngModel)]="beatLevel"
+            [min]="0"
+            [max]="3"
+            [step]="1"
+            (onChange)="applyBeat()"
+            (onSlideEnd)="applyBeat()"
+          />
+          <div class="tempo-ticks" aria-hidden="true">
+            @for (option of beatOptions; track option.label) {
+              <span>{{ option.label }}</span>
+            }
+          </div>
+        </div>
+
         <div class="button-row">
           @if (isRunning()) {
             <p-button
@@ -128,8 +161,9 @@
     <section class="chant-strip" aria-label="佛號念誦進度">
       @for (group of visibleGroups(); track group.index) {
         <div class="chant-group" [class]="group.state">
+          <span class="group-number">{{ group.displayIndex }}</span>
           @for (char of group.chars; track $index) {
-            <span [class]="charState(group, $index)">{{ char }}</span>
+            <span class="chant-char" [class]="charState(group, $index)">{{ char }}</span>
           }
         </div>
       }

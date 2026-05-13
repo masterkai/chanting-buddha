@@ -1,305 +1,381 @@
 :host {
-  display: block;
-  min-height: 100dvh;
+    display: block;
+    min-height: 100dvh;
 }
 
 .chant-app {
-  min-height: 100dvh;
-  overflow: hidden;
-  position: relative;
-  background:
-    radial-gradient(circle at 50% 25%, rgba(250, 204, 21, 0.3), transparent 19rem),
+    min-height: 100dvh;
+    overflow: hidden;
+    position: relative;
+    background: radial-gradient(circle at 50% 25%, rgba(250, 204, 21, 0.3), transparent 19rem),
     linear-gradient(180deg, #27104f 0%, #642047 52%, #9b3a25 100%);
-  color: #fff8e7;
+    color: #fff8e7;
 }
 
 .practice-stage {
-  align-items: center;
-  display: grid;
-  min-height: 100dvh;
-  padding: 2rem 1rem 11rem;
-  place-items: center;
-  position: relative;
+    align-items: center;
+    display: grid;
+    min-height: 100dvh;
+    padding: 2rem 1rem 11rem;
+    place-items: center;
+    position: relative;
 }
 
 .halo {
-  align-items: center;
-  display: grid;
-  height: min(58vw, 28rem);
-  isolation: isolate;
-  place-items: center;
-  position: absolute;
-  top: 8vh;
-  width: min(58vw, 28rem);
+    align-items: center;
+    display: grid;
+    height: min(58vw, 28rem);
+    isolation: isolate;
+    place-items: center;
+    position: absolute;
+    top: 8vh;
+    width: min(58vw, 28rem);
 }
 
 .halo-ring {
-  border: 2px solid rgba(255, 222, 89, 0.45);
-  border-radius: 50%;
-  box-shadow: 0 0 55px rgba(255, 222, 89, 0.35);
-  position: absolute;
+    border: 2px solid rgba(255, 222, 89, 0.45);
+    border-radius: 50%;
+    box-shadow: 0 0 55px rgba(255, 222, 89, 0.35);
+    position: absolute;
 }
 
 .halo-ring-large {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .halo-ring-medium {
-  height: 70%;
-  width: 70%;
+    height: 70%;
+    width: 70%;
 }
 
 .buddha-mark {
-  align-items: center;
-  background: linear-gradient(180deg, #ffe58a, #c48324);
-  border: 1px solid rgba(255, 248, 231, 0.45);
-  border-radius: 50%;
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
-  color: #4b2307;
-  display: grid;
-  font-size: clamp(4rem, 12vw, 7.5rem);
-  font-weight: 700;
-  height: min(34vw, 15rem);
-  place-items: center;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
-  width: min(34vw, 15rem);
+    align-items: center;
+    background: linear-gradient(180deg, #ffe58a, #c48324);
+    border: 1px solid rgba(255, 248, 231, 0.45);
+    border-radius: 50%;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.38);
+    color: #4b2307;
+    display: grid;
+    font-size: clamp(4rem, 12vw, 7.5rem);
+    font-weight: 700;
+    height: min(34vw, 15rem);
+    place-items: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    width: min(34vw, 15rem);
 }
 
 .sutra-copy {
-  display: grid;
-  gap: 0.8rem;
-  left: clamp(1rem, 5vw, 4rem);
-  max-width: 26rem;
-  position: absolute;
-  top: clamp(1rem, 8vh, 5rem);
+    display: grid;
+    gap: 0.8rem;
+    left: clamp(1rem, 5vw, 4rem);
+    max-width: 26rem;
+    position: absolute;
+    top: clamp(1rem, 8vh, 5rem);
 }
 
 .sutra-copy span {
-  color: #fff7ed;
-  font-size: clamp(1.1rem, 2.4vw, 2rem);
-  font-weight: 800;
-  line-height: 1.25;
-  text-shadow:
-    0 2px 0 #b91c1c,
+    color: #fff7ed;
+    font-size: clamp(1.1rem, 2.4vw, 2rem);
+    font-weight: 800;
+    line-height: 1.25;
+    text-shadow: 0 2px 0 #b91c1c,
     0 0 12px rgba(248, 113, 113, 0.9);
 }
 
 .setup-panel,
 .practice-panel,
 .dedication-panel {
-  backdrop-filter: blur(18px);
-  background: rgba(23, 12, 42, 0.68);
-  border: 1px solid rgba(255, 248, 231, 0.22);
-  border-radius: 8px;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
-  display: grid;
-  gap: 1rem;
-  max-width: 31rem;
-  padding: clamp(1.25rem, 4vw, 2rem);
-  position: relative;
-  width: min(92vw, 31rem);
-  z-index: 1;
+    backdrop-filter: blur(18px);
+    background: rgba(23, 12, 42, 0.68);
+    border: 1px solid rgba(255, 248, 231, 0.22);
+    border-radius: 8px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+    display: grid;
+    gap: 1rem;
+    max-width: 31rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    position: relative;
+    width: min(92vw, 31rem);
+    z-index: 1;
 }
 
 .practice-panel,
 .dedication-panel {
-  justify-items: center;
-  text-align: center;
+    justify-items: center;
+    text-align: center;
 }
 
 .step-label {
-  color: #fde68a;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0;
-  margin: 0;
+    color: #fde68a;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin: 0;
 }
 
 h1 {
-  color: #fff8e7;
-  font-size: clamp(2rem, 7vw, 4rem);
-  line-height: 1.05;
-  margin: 0;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.35);
+    color: #fff8e7;
+    font-size: clamp(2rem, 7vw, 4rem);
+    line-height: 1.05;
+    margin: 0;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.35);
 }
 
 label {
-  color: #fef3c7;
-  font-weight: 700;
+    color: #fef3c7;
+    font-weight: 700;
 }
 
 input[pInputText],
 :host ::ng-deep .p-inputnumber-input {
-  background: rgba(255, 248, 231, 0.95);
-  border: 1px solid rgba(120, 53, 15, 0.22);
-  border-radius: 8px;
-  color: #3f1d08;
-  min-height: 3.1rem;
-  outline: none;
-  padding: 0.7rem 0.9rem;
-  width: 100%;
+    background: rgba(255, 248, 231, 0.95);
+    border: 1px solid rgba(120, 53, 15, 0.22);
+    border-radius: 8px;
+    color: #3f1d08;
+    min-height: 3.1rem;
+    outline: none;
+    padding: 0.7rem 0.9rem;
+    width: 100%;
 }
 
 input[pInputText]:focus,
 :host ::ng-deep .p-inputnumber-input:focus {
-  border-color: #facc15;
-  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.24);
+    border-color: #facc15;
+    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.24);
 }
 
 :host ::ng-deep .p-inputnumber {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 :host ::ng-deep .p-inputnumber-button {
-  align-items: center;
-  background: #7c2d12;
-  border: 0;
-  color: #fff8e7;
-  cursor: pointer;
-  display: inline-flex;
-  justify-content: center;
-  min-width: 3rem;
+    align-items: center;
+    background: #7c2d12;
+    border: 0;
+    color: #fff8e7;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    min-width: 3rem;
 }
 
 :host ::ng-deep .p-inputnumber-button:first-child {
-  border-radius: 8px 0 0 8px;
+    border-radius: 8px 0 0 8px;
 }
 
 :host ::ng-deep .p-inputnumber-button:last-child {
-  border-radius: 0 8px 8px 0;
+    border-radius: 0 8px 8px 0;
 }
 
 .button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
 }
 
 :host ::ng-deep .primary-action .p-button,
 :host ::ng-deep .secondary-action .p-button {
-  align-items: center;
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  font-weight: 800;
-  gap: 0.5rem;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.75rem 1rem;
+    align-items: center;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    font-weight: 800;
+    gap: 0.5rem;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.75rem 1rem;
 }
 
 :host ::ng-deep .primary-action .p-button {
-  background: #facc15;
-  color: #3f1d08;
+    background: #facc15;
+    color: #3f1d08;
 }
 
 :host ::ng-deep .secondary-action .p-button {
-  background: rgba(255, 248, 231, 0.14);
-  color: #fff8e7;
+    background: rgba(255, 248, 231, 0.14);
+    color: #fff8e7;
+}
+
+.round-status,
+.counter {
+    align-items: baseline;
+    color: #fde68a;
+    display: flex;
+    font-weight: 900;
+    gap: 0.5rem;
+}
+
+.round-status {
+    font-size: clamp(2.4rem, 8vw, 5rem);
 }
 
 .counter {
-  align-items: baseline;
-  color: #fde68a;
-  display: flex;
-  font-size: clamp(2rem, 8vw, 4.5rem);
-  font-weight: 900;
-  gap: 0.5rem;
+    color: #fff7ed;
+    font-size: clamp(1.4rem, 4vw, 2.4rem);
+}
+
+.round-caption {
+    color: rgba(255, 248, 231, 0.78);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: -0.5rem 0 0;
 }
 
 :host ::ng-deep .p-progressbar {
-  background: rgba(255, 248, 231, 0.18);
-  border-radius: 999px;
-  height: 0.7rem;
-  overflow: hidden;
-  width: min(22rem, 100%);
+    background: rgba(255, 248, 231, 0.18);
+    border-radius: 999px;
+    height: 0.7rem;
+    overflow: hidden;
+    width: min(22rem, 100%);
 }
 
 :host ::ng-deep .p-progressbar-value {
-  background: linear-gradient(90deg, #facc15, #fb923c);
-  height: 100%;
+    background: linear-gradient(90deg, #facc15, #fb923c);
+    height: 100%;
+}
+
+.tempo-control {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 0.25rem;
+    width: min(22rem, 100%);
+}
+
+.tempo-header,
+.tempo-ticks {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tempo-header label,
+.tempo-header span {
+    color: #fef3c7;
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.tempo-header span {
+    color: #facc15;
+}
+
+.tempo-ticks span {
+    color: rgba(255, 248, 231, 0.72);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+:host ::ng-deep .p-slider {
+    background: rgba(255, 248, 231, 0.2);
+    border-radius: 999px;
+    height: 0.55rem;
+}
+
+:host ::ng-deep .p-slider-range {
+    background: #facc15;
+    border-radius: 999px;
+}
+
+:host ::ng-deep .p-slider-handle {
+    background: #fff8e7;
+    border: 3px solid #facc15;
+    border-radius: 50%;
+    height: 1.25rem;
+    margin-left: -0.625rem;
+    margin-top: -0.35rem;
+    width: 1.25rem;
 }
 
 .dedication {
-  color: #fff8e7;
-  font-size: clamp(1.6rem, 5vw, 3.2rem);
-  font-weight: 800;
-  line-height: 1.45;
-  margin: 0;
+    color: #fff8e7;
+    font-size: clamp(1.6rem, 5vw, 3.2rem);
+    font-weight: 800;
+    line-height: 1.45;
+    margin: 0;
 }
 
 .chant-strip {
-  align-items: end;
-  background: linear-gradient(180deg, rgba(127, 29, 29, 0), rgba(127, 29, 29, 0.92));
-  bottom: 0;
-  display: flex;
-  gap: 0.35rem;
-  height: 10.5rem;
-  left: 0;
-  overflow: hidden;
-  padding: 0 1rem 0.9rem;
-  position: fixed;
-  right: 0;
-  z-index: 2;
+    background: linear-gradient(180deg, rgba(127, 29, 29, 0), rgba(127, 29, 29, 0.92));
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.25rem;
+    height: 10.5rem;
+    left: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 1rem 0.9rem;
+    position: fixed;
+    right: 0;
+    z-index: 2;
 }
 
 .chant-group {
-  align-items: center;
-  display: grid;
-  flex: 0 0 auto;
-  gap: 0.05rem;
-  justify-items: center;
-  min-width: 2.75rem;
+    align-items: center;
+    display: grid;
+    flex: 0 0 auto;
+    gap: 0.05rem;
+    justify-items: center;
+    min-width: 2.45rem;
 }
 
-.chant-group span {
-  color: rgba(255, 248, 231, 0.78);
-  display: block;
-  font-size: clamp(1.05rem, 2.5vw, 1.45rem);
-  font-weight: 900;
-  line-height: 1;
-  text-shadow:
-    0 2px 0 #b91c1c,
+.chant-group .group-number {
+    color: rgba(255, 248, 231, 0.62);
+    font-size: 0.72rem;
+    font-weight: 800;
+    line-height: 1;
+    min-height: 0.85rem;
+    text-shadow: none;
+    writing-mode: horizontal-tb;
+}
+
+.chant-group .chant-char {
+    color: rgba(255, 248, 231, 0.78);
+    display: block;
+    font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+    font-weight: 900;
+    line-height: 1;
+    text-shadow: 0 2px 0 #b91c1c,
     0 0 8px rgba(248, 113, 113, 0.7);
-  writing-mode: vertical-rl;
+    writing-mode: vertical-rl;
 }
 
-.chant-group span.done,
-.chant-group span.active {
-  color: #facc15;
-  text-shadow:
-    0 2px 0 #713f12,
+.chant-group .chant-char.done,
+.chant-group .chant-char.active {
+    color: #facc15;
+    text-shadow: 0 2px 0 #713f12,
     0 0 14px rgba(250, 204, 21, 0.9);
 }
 
-.chant-group span.active {
-  transform: scale(1.18);
+.chant-group .chant-char.active {
+    transform: scale(1.18);
 }
 
 .chant-group.completed {
-  opacity: 0.62;
+    opacity: 0.62;
 }
 
 @media (max-width: 720px) {
-  .practice-stage {
-    align-items: start;
-    padding-top: 8.5rem;
-  }
+    .practice-stage {
+        align-items: start;
+        padding-top: 8.5rem;
+    }
 
-  .sutra-copy {
-    right: 1rem;
-  }
+    .sutra-copy {
+        right: 1rem;
+    }
 
-  .sutra-copy span {
-    font-size: 1rem;
-  }
+    .sutra-copy span {
+        font-size: 1rem;
+    }
 
-  .halo {
-    opacity: 0.72;
-    top: 18vh;
-  }
+    .halo {
+        opacity: 0.72;
+        top: 18vh;
+    }
 }

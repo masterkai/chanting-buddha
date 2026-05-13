@@ -5,13 +5,20 @@ import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { SliderModule } from 'primeng/slider';
 
 type AppStep = 'chant' | 'count' | 'practice' | 'complete';
 
 type ChantGroup = {
   index: number;
+  displayIndex: number;
   chars: string[];
   state: 'completed' | 'current' | 'upcoming';
+};
+
+type BeatOption = {
+  label: string;
+  ms: number;
 };
 
 @Component({
@@ -22,15 +29,24 @@ type ChantGroup = {
     ButtonModule,
     InputNumberModule,
     InputTextModule,
-    ProgressBarModule
+    ProgressBarModule,
+    SliderModule
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnDestroy {
+  private readonly groupsPerRound = 25;
+
   chantText = '南無阿彌陀佛';
   targetCount = 25;
-  beatMs = 700;
+  beatLevel = 1;
+  readonly beatOptions: BeatOption[] = [
+    { label: '1秒', ms: 1000 },
+    { label: '1/2秒', ms: 500 },
+    { label: '1/3秒', ms: 333 },
+    { label: '1/4秒', ms: 250 }
+  ];
 
   protected readonly step = signal<AppStep>('chant');
   protected readonly isRunning = signal(false);
@@ -38,7 +54,17 @@ export class App implements OnDestroy {
   protected readonly activeCharIndex = signal(0);
 
   protected readonly chantChars = computed(() => Array.from(this.cleanChantText()));
-  protected readonly totalChars = computed(() => this.chantChars().length * this.safeTargetCount());
+  protected readonly safeCount = computed(() => this.safeTargetCount());
+  protected readonly totalRounds = computed(() =>
+    Math.ceil(this.safeCount() / this.groupsPerRound)
+  );
+  protected readonly currentRound = computed(() =>
+    Math.min(
+      this.totalRounds(),
+      Math.floor(this.completedGroups() / this.groupsPerRound) + 1
+    )
+  );
+  protected readonly totalChars = computed(() => this.chantChars().length * this.safeCount());
   protected readonly finishedChars = computed(() => {
     const completedChars = this.completedGroups() * this.chantChars().length;
     return Math.min(completedChars + this.activeCharIndex(), this.totalChars());
@@ -49,14 +75,14 @@ export class App implements OnDestroy {
   });
   protected readonly visibleGroups = computed<ChantGroup[]>(() => {
     const groups: ChantGroup[] = [];
-    const total = this.safeTargetCount();
-    const start = Math.max(0, this.completedGroups() - 2);
-    const end = Math.min(total, start + 18);
+    const roundStart = (this.currentRound() - 1) * this.groupsPerRound;
+    const roundEnd = Math.min(roundStart + this.groupsPerRound, this.safeCount());
     const chars = this.chantChars();
 
-    for (let index = start; index < end; index += 1) {
+    for (let index = roundStart; index < roundEnd; index += 1) {
       groups.push({
         index,
+        displayIndex: index - roundStart + 1,
         chars,
         state:
           index < this.completedGroups()
@@ -100,7 +126,7 @@ export class App implements OnDestroy {
     }
 
     this.isRunning.set(true);
-    this.timerId = setInterval(() => this.advanceBeat(), this.beatMs);
+    this.timerId = setInterval(() => this.advanceBeat(), this.currentBeatMs());
   }
 
   protected pause(): void {
@@ -112,6 +138,19 @@ export class App implements OnDestroy {
     this.completedGroups.set(0);
     this.activeCharIndex.set(0);
     this.step.set('chant');
+  }
+
+  protected applyBeat(): void {
+    this.beatLevel = Math.max(0, Math.min(this.beatOptions.length - 1, Number(this.beatLevel) || 0));
+
+    if (this.isRunning()) {
+      this.stopTimer();
+      this.start();
+    }
+  }
+
+  protected currentBeatLabel(): string {
+    return this.beatOptions[this.beatLevel]?.label ?? this.beatOptions[0].label;
   }
 
   protected charState(group: ChantGroup, charIndex: number): 'done' | 'active' | 'pending' {
@@ -144,7 +183,7 @@ export class App implements OnDestroy {
     this.completedGroups.set(nextGroup);
     this.activeCharIndex.set(0);
 
-    if (nextGroup >= this.safeTargetCount()) {
+    if (nextGroup >= this.safeCount()) {
       this.stopTimer();
       this.step.set('complete');
     }
@@ -157,6 +196,10 @@ export class App implements OnDestroy {
     }
 
     this.isRunning.set(false);
+  }
+
+  private currentBeatMs(): number {
+    return this.beatOptions[this.beatLevel]?.ms ?? this.beatOptions[0].ms;
   }
 
   private cleanChantText(): string {
