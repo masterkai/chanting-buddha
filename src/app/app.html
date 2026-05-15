@@ -1,171 +1,171 @@
 <main class="chant-app">
-  <section class="practice-stage" [class.is-complete]="step() === 'complete'">
-    <div class="halo" aria-hidden="true">
-      <div class="halo-ring halo-ring-large"></div>
-      <div class="halo-ring halo-ring-medium"></div>
-      <div class="buddha-mark">佛</div>
-    </div>
-
-    <div class="sutra-copy" aria-hidden="true">
-      <span>南無阿彌陀佛</span>
-      <span>至心稱念</span>
-      <span>清淨安住</span>
-    </div>
-
-    @if (step() === 'chant') {
-      <form class="setup-panel" (ngSubmit)="goToCount()">
-        <p class="step-label">畫面 1</p>
-        <h1>輸入佛號</h1>
-        <label for="chantText">欲念的字串</label>
-        <input
-          id="chantText"
-          name="chantText"
-          pInputText
-          [(ngModel)]="chantText"
-          autocomplete="off"
-        />
-        <p-button
-          type="submit"
-          label="下一步"
-          icon="pi pi-arrow-right"
-          iconPos="right"
-          styleClass="primary-action"
-        />
-      </form>
-    }
-
-    @if (step() === 'count') {
-      <form class="setup-panel" (ngSubmit)="beginPractice()">
-        <p class="step-label">畫面 2</p>
-        <h1>設定遍數</h1>
-        <label for="targetCount">欲念佛號的遍數</label>
-        <p-inputnumber
-          inputId="targetCount"
-          name="targetCount"
-          [(ngModel)]="targetCount"
-          [showButtons]="true"
-          [min]="1"
-          [max]="9999"
-          [useGrouping]="false"
-          buttonLayout="horizontal"
-          decrementButtonIcon="pi pi-minus"
-          incrementButtonIcon="pi pi-plus"></p-inputnumber>
-        <div class="button-row">
-          <p-button
-            type="button"
-            label="返回"
-            icon="pi pi-arrow-left"
-            severity="secondary"
-            styleClass="secondary-action"
-            (onClick)="backToChant()"
-          />
-          <p-button
-            type="submit"
-            label="開始"
-            icon="pi pi-play"
-            styleClass="primary-action"
-          />
+    <section class="practice-stage" [class.is-complete]="step() === 'complete'">
+        <div class="halo" aria-hidden="true">
+            <div class="halo-ring halo-ring-large"></div>
+            <div class="halo-ring halo-ring-medium"></div>
+            <div class="buddha-mark">佛</div>
         </div>
-      </form>
-    }
+
+        <div class="sutra-copy" aria-hidden="true">
+            <span>{{ chantText }}</span>
+            <span>至心稱念</span>
+            <span>清淨安住</span>
+        </div>
+
+        @if (step() === 'chant') {
+            <form class="setup-panel" (ngSubmit)="goToCount()">
+                <p class="step-label">畫面 1</p>
+                <h1>輸入佛號</h1>
+                <label for="chantText">欲念的字串</label>
+                <input
+                        id="chantText"
+                        name="chantText"
+                        pInputText
+                        [(ngModel)]="chantText"
+                        autocomplete="off"
+                />
+                <p-button
+                        type="submit"
+                        label="下一步"
+                        icon="pi pi-arrow-right"
+                        iconPos="right"
+                        styleClass="primary-action"
+                />
+            </form>
+        }
+
+        @if (step() === 'count') {
+            <form class="setup-panel" (ngSubmit)="beginPractice()">
+                <p class="step-label">畫面 2</p>
+                <h1>設定遍數</h1>
+                <label for="targetCount">欲念佛號的遍數</label>
+                <p-inputnumber
+                        inputId="targetCount"
+                        name="targetCount"
+                        [(ngModel)]="targetCount"
+                        [showButtons]="true"
+                        [min]="1"
+                        [max]="9999"
+                        [useGrouping]="false"
+                        buttonLayout="horizontal"
+                        decrementButtonIcon="pi pi-minus"
+                        incrementButtonIcon="pi pi-plus"></p-inputnumber>
+                <div class="button-row">
+                    <p-button
+                            type="button"
+                            label="返回"
+                            icon="pi pi-arrow-left"
+                            severity="secondary"
+                            styleClass="secondary-action"
+                            (onClick)="backToChant()"
+                    />
+                    <p-button
+                            type="submit"
+                            label="開始"
+                            icon="pi pi-play"
+                            styleClass="primary-action"
+                    />
+                </div>
+            </form>
+        }
+
+        @if (step() === 'practice') {
+            <section class="practice-panel" aria-live="polite">
+                <p class="step-label">畫面 3</p>
+                <h1>{{ chantText }}</h1>
+
+                <div class="round-status">
+                    <span>{{ currentRound() }}</span>
+                    <span>/</span>
+                    <span>{{ totalRounds() }}</span>
+                </div>
+                <p class="round-caption">
+                    第 {{ currentRound() }} 輪，每輪最多 25 組
+                </p>
+
+                <div class="counter">
+                    <span>{{ completedGroups() }}</span>
+                    <span>/</span>
+                    <span>{{ targetCount }}</span>
+                </div>
+                <p-progressbar [value]="progress()" [showValue]="false"></p-progressbar>
+
+                <div class="tempo-control">
+                    <div class="tempo-header">
+                        <label for="beatSlider">念佛頻率</label>
+                        <span>{{ currentBeatLabel() }}</span>
+                    </div>
+                    <p-slider
+                            id="beatSlider"
+                            name="beatSlider"
+                            [(ngModel)]="beatLevel"
+                            [min]="0"
+                            [max]="3"
+                            [step]="1"
+                            (onChange)="applyBeat()"
+                            (onSlideEnd)="applyBeat()"
+                    />
+                    <div class="tempo-ticks" aria-hidden="true">
+                        @for (option of beatOptions; track option.label) {
+                            <span>{{ option.label }}</span>
+                        }
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    @if (isRunning()) {
+                        <p-button
+                                label="暫停"
+                                icon="pi pi-pause"
+                                severity="secondary"
+                                styleClass="secondary-action"
+                                (onClick)="pause()"
+                        />
+                    } @else {
+                        <p-button
+                                label="繼續"
+                                icon="pi pi-play"
+                                styleClass="primary-action"
+                                (onClick)="start()"
+                        />
+                    }
+                    <p-button
+                            label="重設"
+                            icon="pi pi-refresh"
+                            severity="secondary"
+                            styleClass="secondary-action"
+                            (onClick)="reset()"
+                    />
+                </div>
+            </section>
+        }
+
+        @if (step() === 'complete') {
+            <section class="dedication-panel" aria-live="polite">
+                <p class="step-label">圓滿</p>
+                <p class="dedication">
+                    願以此功德，迴向西方淨土，願花開見佛悟無生，不退菩薩為伴侶。
+                </p>
+                <p-button
+                        label="重新開始"
+                        icon="pi pi-refresh"
+                        styleClass="primary-action"
+                        (onClick)="reset()"
+                />
+            </section>
+        }
+    </section>
 
     @if (step() === 'practice') {
-      <section class="practice-panel" aria-live="polite">
-        <p class="step-label">畫面 3</p>
-        <h1>{{ chantText }}</h1>
-
-        <div class="round-status">
-          <span>{{ currentRound() }}</span>
-          <span>/</span>
-          <span>{{ totalRounds() }}</span>
-        </div>
-        <p class="round-caption">
-          第 {{ currentRound() }} 輪，每輪最多 25 組
-        </p>
-
-        <div class="counter">
-          <span>{{ completedGroups() }}</span>
-          <span>/</span>
-          <span>{{ targetCount }}</span>
-        </div>
-        <p-progressbar [value]="progress()" [showValue]="false"></p-progressbar>
-
-        <div class="tempo-control">
-          <div class="tempo-header">
-            <label for="beatSlider">念佛頻率</label>
-            <span>{{ currentBeatLabel() }}</span>
-          </div>
-          <p-slider
-            id="beatSlider"
-            name="beatSlider"
-            [(ngModel)]="beatLevel"
-            [min]="0"
-            [max]="3"
-            [step]="1"
-            (onChange)="applyBeat()"
-            (onSlideEnd)="applyBeat()"
-          />
-          <div class="tempo-ticks" aria-hidden="true">
-            @for (option of beatOptions; track option.label) {
-              <span>{{ option.label }}</span>
+        <section class="chant-strip" aria-label="佛號念誦進度">
+            @for (group of visibleGroups(); track group.index) {
+                <div class="chant-group" [class]="group.state">
+                    <span class="group-number">{{ group.displayIndex }}</span>
+                    @for (char of group.chars; track $index) {
+                        <span class="chant-char" [class]="charState(group, $index)">{{ char }}</span>
+                    }
+                </div>
             }
-          </div>
-        </div>
-
-        <div class="button-row">
-          @if (isRunning()) {
-            <p-button
-              label="暫停"
-              icon="pi pi-pause"
-              severity="secondary"
-              styleClass="secondary-action"
-              (onClick)="pause()"
-            />
-          } @else {
-            <p-button
-              label="繼續"
-              icon="pi pi-play"
-              styleClass="primary-action"
-              (onClick)="start()"
-            />
-          }
-          <p-button
-            label="重設"
-            icon="pi pi-refresh"
-            severity="secondary"
-            styleClass="secondary-action"
-            (onClick)="reset()"
-          />
-        </div>
-      </section>
+        </section>
     }
-
-    @if (step() === 'complete') {
-      <section class="dedication-panel" aria-live="polite">
-        <p class="step-label">圓滿</p>
-        <p class="dedication">
-          願以此功德，迴向西方淨土，願花開見佛悟無生，不退菩薩為伴侶。
-        </p>
-        <p-button
-          label="重新開始"
-          icon="pi pi-refresh"
-          styleClass="primary-action"
-          (onClick)="reset()"
-        />
-      </section>
-    }
-  </section>
-
-  @if (step() === 'practice') {
-    <section class="chant-strip" aria-label="佛號念誦進度">
-      @for (group of visibleGroups(); track group.index) {
-        <div class="chant-group" [class]="group.state">
-          <span class="group-number">{{ group.displayIndex }}</span>
-          @for (char of group.chars; track $index) {
-            <span class="chant-char" [class]="charState(group, $index)">{{ char }}</span>
-          }
-        </div>
-      }
-    </section>
-  }
 </main>

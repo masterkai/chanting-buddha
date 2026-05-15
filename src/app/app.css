@@ -307,9 +307,9 @@ input[pInputText]:focus,
     bottom: 0;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 0.25rem;
-    height: 10.5rem;
+    height: max-content;
     left: 0;
     overflow-x: auto;
     overflow-y: hidden;

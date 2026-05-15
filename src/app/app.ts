@@ -37,6 +37,7 @@ type BeatOption = {
 })
 export class App implements OnDestroy {
   private readonly groupsPerRound = 25;
+  private readonly chantAudioSource = 'chant.mp3';
 
   chantText = '南無阿彌陀佛';
   targetCount = 25;
@@ -52,9 +53,16 @@ export class App implements OnDestroy {
   protected readonly isRunning = signal(false);
   protected readonly completedGroups = signal(0);
   protected readonly activeCharIndex = signal(0);
+  private readonly setupRevision = signal(0);
 
-  protected readonly chantChars = computed(() => Array.from(this.cleanChantText()));
-  protected readonly safeCount = computed(() => this.safeTargetCount());
+  protected readonly chantChars = computed(() => {
+    this.setupRevision();
+    return Array.from(this.cleanChantText());
+  });
+  protected readonly safeCount = computed(() => {
+    this.setupRevision();
+    return this.safeTargetCount();
+  });
   protected readonly totalRounds = computed(() =>
     Math.ceil(this.safeCount() / this.groupsPerRound)
   );
@@ -97,6 +105,7 @@ export class App implements OnDestroy {
   });
 
   private timerId: ReturnType<typeof setInterval> | null = null;
+  private chantAudio: HTMLAudioElement | null = null;
 
   ngOnDestroy(): void {
     this.stopTimer();
@@ -104,6 +113,7 @@ export class App implements OnDestroy {
 
   protected goToCount(): void {
     this.chantText = this.cleanChantText();
+    this.refreshSetup();
     this.step.set('count');
   }
 
@@ -114,6 +124,7 @@ export class App implements OnDestroy {
 
   protected beginPractice(): void {
     this.targetCount = this.safeTargetCount();
+    this.refreshSetup();
     this.completedGroups.set(0);
     this.activeCharIndex.set(0);
     this.step.set('practice');
@@ -126,6 +137,7 @@ export class App implements OnDestroy {
     }
 
     this.isRunning.set(true);
+    this.playChantAudio();
     this.timerId = setInterval(() => this.advanceBeat(), this.currentBeatMs());
   }
 
@@ -176,6 +188,7 @@ export class App implements OnDestroy {
 
     if (nextChar < this.chantChars().length) {
       this.activeCharIndex.set(nextChar);
+      this.playChantAudio();
       return;
     }
 
@@ -186,7 +199,10 @@ export class App implements OnDestroy {
     if (nextGroup >= this.safeCount()) {
       this.stopTimer();
       this.step.set('complete');
+      return;
     }
+
+    this.playChantAudio();
   }
 
   private stopTimer(): void {
@@ -196,10 +212,56 @@ export class App implements OnDestroy {
     }
 
     this.isRunning.set(false);
+    this.stopChantAudio();
   }
 
   private currentBeatMs(): number {
     return this.beatOptions[this.beatLevel]?.ms ?? this.beatOptions[0].ms;
+  }
+
+  private refreshSetup(): void {
+    this.setupRevision.update((revision) => revision + 1);
+  }
+
+  private currentAudioRate(): number {
+    return this.beatOptions[0].ms / this.currentBeatMs();
+  }
+
+  private playChantAudio(): void {
+    const audio = this.getChantAudio();
+
+    if (!audio) {
+      return;
+    }
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.playbackRate = this.currentAudioRate();
+    const playResult = audio.play();
+
+    if (playResult) {
+      void playResult.catch(() => {
+        // Browsers may block audio if playback was not started by a user gesture.
+      });
+    }
+  }
+
+  private stopChantAudio(): void {
+    if (!this.chantAudio) {
+      return;
+    }
+
+    this.chantAudio.pause();
+    this.chantAudio.currentTime = 0;
+  }
+
+  private getChantAudio(): HTMLAudioElement | null {
+    if (typeof Audio === 'undefined') {
+      return null;
+    }
+
+    this.chantAudio ??= new Audio(this.chantAudioSource);
+    return this.chantAudio;
   }
 
   private cleanChantText(): string {
