@@ -24,3 +24,9 @@ button,
 input {
   font: inherit;
 }
+
+button:not(:disabled):hover,
+[role="button"]:not([aria-disabled="true"]):hover,
+.p-button:not(:disabled):not(.p-disabled):hover {
+  cursor: pointer;
+}
